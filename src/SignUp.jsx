@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -45,8 +45,6 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-// TODO: replace this by pulling from DB
-const languages = ["English", "Spanish", "Chinese"];
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -60,10 +58,19 @@ const MenuProps = {
 
 export default function SignUp() {
   const classes = useStyles();
-  const [personName, setPersonName] = React.useState([]);
+  const [languages, setLanguages] = React.useState([]);
+  const [languageOptions, setLanguageOptions] = React.useState(["Placeholder1", "Placerholder2"]);
+
+  useEffect(() => {
+    fetch("https://ab-language-app.herokuapp.com/api/languages")
+      .then(payload => payload.json())
+      .then(res => {
+        setLanguageOptions(res.map(r => { return { id: r.id, name: r.name } }))
+      })
+  }, [])
 
   function handleChange(event) {
-    setPersonName(event.target.value);
+    setLanguages(event.target.value);
   }
 
   function handleChangeMultiple(event) {
@@ -74,7 +81,7 @@ export default function SignUp() {
         value.push(options[i].value);
       }
     }
-    setPersonName(value);
+    setLanguages(value);
   }
 
 
@@ -141,21 +148,21 @@ export default function SignUp() {
                 <InputLabel htmlFor="select-multiple-chip">Languages</InputLabel>
                 <Select
                   multiple
-                  value={personName}
+                  value={languages}
                   onChange={handleChange}
                   input={<Input id="select-multiple-chip" />}
                   renderValue={selected => (
                     <div className={classes.chips}>
                       {selected.map(value => (
-                        <Chip key={value} label={value} className={classes.chip} />
+                        <Chip key={value.id} label={value.name} className={classes.chip} />
                       ))}
                     </div>
                   )}
                   MenuProps={MenuProps}
                 >
-                  {languages.map(language => (
-                    <MenuItem key={language} value={language}>
-                      {language}
+                  {languageOptions.map(language => (
+                    <MenuItem key={language.id} value={language}>
+                      {language.name}
                     </MenuItem>
                   ))}
                 </Select>

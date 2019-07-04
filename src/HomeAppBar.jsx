@@ -186,7 +186,7 @@ export default function PrimarySearchAppBar() {
               </Badge>
             </IconButton>
             <Spacer />
-            <IconButton color="inherit">
+            <IconButton href="/home/availability" color="inherit">
               <Badge color="secondary">
                 <Tooltip title="Set available times">
                   <CalendarIcon />
@@ -202,7 +202,7 @@ export default function PrimarySearchAppBar() {
               </Badge>
             </IconButton>
             <Spacer />
-            <IconButton color="inherit">
+            <IconButton href="/home/settings" color="inherit">
               <Badge color="secondary">
                 <Tooltip title="Change settings">
                   <SettingsIcon />
@@ -210,7 +210,7 @@ export default function PrimarySearchAppBar() {
               </Badge>
             </IconButton>
             <Spacer />
-            <IconButton href="#" color="inherit">
+            <IconButton href="/login" color="inherit">
               <Tooltip title="Sign out">
                 <SignOutIcon />
               </Tooltip>
